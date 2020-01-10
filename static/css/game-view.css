@@ -1,0 +1,186 @@
+
+/* ==================================================================
+   General
+   ================================================================== */
+
+body {
+    margin: 0;
+    background: #fafafa;
+}
+
+/* ==================================================================
+   Title
+   ================================================================== */
+
+h1 {
+    text-align: center;
+}
+
+.player-vs {
+    opacity: 0.33;
+    font-style: italic;
+}
+
+.player-active {
+    text-decoration: underline;
+}
+
+/* ==================================================================
+   Pieces
+   ================================================================== */
+
+.piece {
+    background: #eb9;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    transform: translateY(-16px);
+    box-shadow: 0 8px 0 #954, 0 16px 0 #954, 0 18px 2px #0005;
+}
+
+.tall {
+    transform: translateY(-40px);
+    box-shadow: 0 8px 0 #954, 0 16px 0 #954, 0 24px 0 #954,
+        0 32px 0 #954, 0 40px 0 #954, 0 42px 2px #0005;
+}
+
+.round {
+    border-radius: 50%;
+}
+
+.dark {
+    background: #c53;
+    box-shadow: 0 8px 0 #521, 0 16px 0 #521, 0 18px 2px #0005;
+}
+
+.tall.dark {
+    box-shadow: 0 8px 0 #521, 0 16px 0 #521, 0 24px 0 #521,
+        0 32px 0 #521, 0 40px 0 #521, 0 42px 2px #0005;
+}
+
+.hole::after {
+    width: 30px;
+    height: 30px;
+    margin: 10px;
+    border-radius: 100px;
+    background: #5106;
+    content: "";
+    display: block;
+    position: absolute;
+    box-shadow: 0 10px 0px 2px #5105 inset;
+}
+
+/* ==================================================================
+   Game table
+   ================================================================== */
+
+body {
+    overflow-x: hidden;
+}
+
+.game-table {
+    transform-origin: 50% 35%;
+    transform: perspective(3200px) rotateX(40deg);
+}
+
+.board-aside {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 100px;
+}
+
+/* ==================================================================
+   Board and fields
+   ================================================================== */
+
+body {
+    counter-reset: row 5;
+}
+
+.board {
+    width: 400px;
+    margin: 0 auto;
+    position: relative;
+    display: flex;
+    flex-wrap: wrap;
+    counter-reset: column;
+    transform: rotateZ(-45deg);
+}
+
+.field {
+    box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    background: #eee;
+    border: 2.5px solid #ccc6;
+    margin: 4px;
+    width: 92px;
+    height: 92px;
+    border-radius: 50%;
+    position: relative;
+}
+
+.board .field::before, .board .field::after {
+    color: black;
+    font: 1.5em sans-serif;
+}
+/*
+.board .field:nth-child(4n-3)::before {
+    counter-increment: row -1;
+    content: counter(row);
+    align-self: center;
+    margin-right: auto;
+    margin-left: -1.2em;
+    transform: rotate(90deg);
+}
+
+.board .field:nth-child(1n+13)::after {
+    counter-increment: column;
+    content: counter(column, upper-alpha);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -1.5em;
+    text-align: center;
+}
+*/
+.board .piece {
+    position: absolute;
+    transform: rotateZ(45deg) translateY(-16px);
+}
+
+.board .piece.tall {
+    transform: rotateZ(45deg) translateY(-40px);
+}
+
+.field.in-winning-row {
+    background: rgba(50, 200, 0, 0.25);
+    border-color: rgba(50, 200, 0, 0.6);
+}
+
+/* ==================================================================
+   Next and remaining
+   ================================================================== */
+
+.remaining {
+    display: flex;
+    flex-wrap: wrap;
+    width: 560px;
+    height: 200px;
+}
+
+.remaining .piece {
+    margin: 50px 20px 0 0;
+}
+
+.next {
+    display: flex;
+    align-items: flex-end;
+    flex-shrink: 0;
+    margin: -50px 50px 0;
+}
+
+.next .piece {
+    margin: 0 auto 20px;
+}
