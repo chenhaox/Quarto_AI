@@ -2,6 +2,7 @@ from flask import Flask,url_for,redirect,render_template,session, request, abort
 from datetime import timedelta
 import os
 from game import GameList, GameError
+import time
 app = Flask(__name__)
 app.secret_key = os.urandom(32)
 app.permanent_session_lifetime = timedelta(minutes=15)
@@ -13,6 +14,7 @@ def index():
     errorcode = None
     if request.method =="POST":
         print("This is a post request")
+        timepr = time.time()
         try:
         # if True:
             if "gameid" in session and session["gameid"] in gamelist.gamelist:
@@ -31,6 +33,8 @@ def index():
                 return "Invalid operation",404
         except Exception as e:
             errorcode = e
+        timefn = time.time()
+        print("The time is ", timefn - timepr)
     if "gameid" in session and session["gameid"] in gamelist.gamelist:
         return render_template('game-view.html', game = gamelist.gamelist[session["gameid"]], game_status = gamelist.gamelist[session["gameid"]].get_state(), errorcode = errorcode)
     else:

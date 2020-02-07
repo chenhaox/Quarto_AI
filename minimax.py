@@ -15,7 +15,7 @@ class AI():
         if nRemSpots > 12:
             result = self.simple_getMove(board,bag, next_piece)
         elif 9<nRemSpots<=12:
-            result = self.maxmin_getMove(board,bag, next_piece, 1)
+            result = self.maxmin_getMove(board,bag, next_piece, 2)
         elif 7<nRemSpots<=9:
             result = self.maxmin_getMove(board,bag, next_piece, 2)
         elif 1< nRemSpots <= 7:
@@ -30,14 +30,17 @@ class AI():
         bag = copy.deepcopy(bag)
         next_piece = copy.deepcopy(next_piece)
         debug = True
-        remspots = board.emptyTiles()
-        rempieces = bag.bag
+        remspots = board.emptyTiles()       #剩下的空余地方
+        rempieces = bag.bag                 #剩下的棋子
         rootnodes = []
         passedPiece = next_piece
         m = 0
+        rootmaxmizer = [-999]
+        maximizer = [-999]
+        minimizer = [999]
         for i in range(len(remspots)):
             for j in range(len(rempieces)):
-                rootnodes.append(self.buildTree(passedPiece =passedPiece, board= board, bag= bag, coordinate=remspots[i], next_piece= rempieces[j], player = 1 if self.player ==0 else 0, depth= depth ))
+                rootnodes.append(self.buildTree(passedPiece =passedPiece, board= board, bag= bag, coordinate=remspots[i], next_piece= rempieces[j], player = 1 if self.player ==0 else 0, depth= depth, maximizer =maximizer ,minimizer = minimizer, rootmaxmizer = rootmaxmizer))
             m += 1
             print("-----------------")
 
@@ -83,7 +86,7 @@ class AI():
             raise IndexError
 
         if board.data[X][Y] is not None:
-            return board.hasWon()
+            return board.isWon()
         board.placePiece(piece, X, Y)
         out = board.isWon()
         board.removePiece(X, Y)
@@ -94,7 +97,7 @@ class AI():
             raise IndexError
 
         if board.data[X][Y] is not None:
-            return board.hasWon()
+            return board.isWon()
         board.placePiece(piece, X, Y)
         out = board.isWon()
         try:
@@ -104,7 +107,7 @@ class AI():
 
         return out
 
-    def buildTree(self,board, bag, passedPiece, coordinate, next_piece, player,depth):
+    def buildTree(self,board, bag, passedPiece, coordinate, next_piece, player,depth,maximizer=[0], minimizer=[0], rootmaxmizer=[0]):
         # print("Building Tree"+str(depth))
         node = Node(next_piece= next_piece, coordinate=coordinate, player= player)
         cboard = copy.deepcopy(board)
@@ -112,17 +115,32 @@ class AI():
         x = coordinate[0]
         y = coordinate[1]
 
+
         if next_piece == 16:
-            node.isleaf = True
+            node.isleaf = True      #加入maximizer和minimizer
+            if player == 1:  # update maximizer
+                minimizer[0] = min(0, minimizer[0])
+            else:  # update maximizer
+                maximizer[0] = max(0, maximizer[0])
             return node
+
 
         if self.checkIfWinAt2(cboard,cbag, passedPiece, x, y):
             node.isleaf = True
-            node.isquarto = True
+            node.isquarto = True        #加入maximizer和minimizer
+            if player == 1: # update maximizer
+                minimizer[0] = min(1,minimizer[0])
+            else: # update maximizer
+                maximizer[0] = max(-1,maximizer[0])
+
             return node
 
         if depth == 0:
-            node.isleaf = True
+            node.isleaf = True          #加入maximizer和minimizer
+            if player == 1:  # update maximizer
+                minimizer[0] = min(0, minimizer[0])
+            else:  # update maximizer
+                maximizer[0] = max(0, maximizer[0])
             return node
 
         remspots = cboard.emptyTiles()
@@ -130,13 +148,19 @@ class AI():
         for i in range(len(remspots)):
             if len(rempieces) > 0:
                 for j in range(len(rempieces)):
-                    node.addChild(self.buildTree(board = cboard, bag= cbag, passedPiece=next_piece, next_piece= rempieces[j], coordinate = remspots[i], player = 1 if player ==0 else 0, depth = depth-1))
+                    returnresult = self.buildTree(board=cboard, bag=cbag, passedPiece=next_piece, next_piece=rempieces[j],
+                                   coordinate=remspots[i], player=1 if player == 0 else 0, depth=depth - 1)
+                    if returnresult is not None:
+                        node.addChild(returnresult)
                 else:
-                    node.addChild(self.buildTree(board = cboard, bag= cbag, passedPiece=next_piece, next_piece= 16, coordinate = remspots[i], player = 1 if player ==0 else 0, depth = depth-1))
+                    returnresult = self.buildTree(board=cboard, bag=cbag, passedPiece=next_piece, next_piece=16,
+                                   coordinate=remspots[i], player=1 if player == 0 else 0, depth=depth - 1)
+                    if returnresult is not None:
+                        node.addChild(returnresult)
 
         return node
 
-    def __computeMinimax(self, node):
+    def  __computeMinimax(self, node):
         if node.isleaf:
             if node.isquarto:
                 return 1 if node.player == 0 else -1

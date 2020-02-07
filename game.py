@@ -3,7 +3,7 @@ import string
 import random
 import copy
 import bag
-from minimax import AI
+from minimax2 import AI
 # Game states
 _OPEN = 0
 _PLAYING = 1

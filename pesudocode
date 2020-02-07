@@ -1,0 +1,39 @@
+function minimax(spot, piece,  depth, alpha, beta, maxmizingPlayer)
+
+    if game wins when place the piece at spot Then
+        return if maxmizingPlayer Then 1 else 0 endif
+    endif
+
+    if depth = 0 Then
+        return 0
+    endif
+
+    remPiece <- the remaining piece
+    remSpot <- the remaining spot on the board
+    maxEval <- - infinity
+    minEval <- + infinity
+
+    for nextSpot in remSpot do
+        for nextPiece in remPiece do
+            if maxmizingPlayer Then
+                maxEval <- minimax(nextSpot, nextPiece ,depth-1, alpha, beta, false)
+                maxEval <- max(alpha,eval)
+                alpha <- max(alpha,eval)
+                if beta <= alpha Then
+                    break
+                endif
+                return maxEval
+            else
+
+                eval <- minimax( nextSpot, nextPiece  ,depth-1, alpha, beta, true)
+                minEval <- min(beta,eval)
+                beta <- min(beta,eval)
+                if beta <= alpha Then
+                    break
+                endif
+                return miniEval
+            endif
+        endfor
+    endfor
+
+
