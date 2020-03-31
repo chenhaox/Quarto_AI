@@ -4,10 +4,17 @@ var field_size_px = 100;
 var players = [
     document.querySelector('.player-1'),
     document.querySelector('.player-2')
-];
+]; // players
+
+
 var board_wrap = document.querySelector('.board .pieces-wrap');
+// 画布
+
 var next_wrap = document.querySelector('.next');
+// 下一个放置的棋子
+
 var remaining_wrap = document.querySelector('.remaining');
+// 剩下的棋子
 
 var field_set_names = [
     'r-1', 'r-2', 'r-3', 'r-4',
@@ -105,13 +112,13 @@ function highlight_winning_row(board) {
 
 function render_state(state) {
     // Title
-    players[0].textContent = state.players[0];
-    players[1].textContent = state.players[1];
-    players[0].classList.remove('player-active');
-    players[1].classList.remove('player-active');
-    if (state.active_player != null) {
-        players[state.active_player].classList.add('player-active');
-    }
+//    players[0].textContent = state.players[0];
+//    players[1].textContent = state.players[1];
+//    players[0].classList.remove('player-active');
+//    players[1].classList.remove('player-active');
+//    if (state.active_player != null) {
+//        players[state.active_player].classList.add('player-active');
+//    }
 
     // Board
     render_board(state.board)
@@ -156,10 +163,22 @@ function render_board(board) {
     }
 }
 
-var message = document.cookie
-if (message != null){
-    if (message.status === 'ok') {
-    render_state(message.data);
-    }
-}
+var ws_url = (location.protocol === 'https:' ? 'wss:' : 'ws:') + '//' +
+    location.host + '/api/v1/games/' + game_id + '/message-channel';
 
+$ajax({
+    url:'getnextstep',
+    method: 'POST',
+    type:'JSON',
+    data:{
+        remaining_pieces:,
+        board:,
+        next_piece
+    },
+    success: function(rq){
+        render_board(JSON.parse(rq))
+    },
+    loading: function(rq){
+        text = "AI is thinking ..."
+    }
+});

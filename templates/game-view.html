@@ -6,116 +6,57 @@
         <title>Game</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="icon" type="image/png" href="/static/favicon.png">
-        <link rel="apple-touch-icon" href="/static/favicon.png">
-
-        <link rel="stylesheet" href="/static/css/normalize.css">
-        <link rel="stylesheet" href="/static/css/game-view.css">
+        <link rel="stylesheet" href="../static/css/normalize.css">
+        <link rel="stylesheet" href="../static/css/game-view.css">
     </head>
 
     <body>
-        <h1 style="color:red">
-            Please finish playing game in 15 minutes. After 15 minutes, the game will be refreshed.
-        </h1>
-        {% if errorcode is not none%}
-            <h1 style="color:red">
-                {{errorcode}}
-                <!--{% if errorcode == 403 %}-->
-                    <!--Please place the selected piece first!-->
-                <!--{% endif %}-->
-            </h1>
-        {% endif %}
-
-        {% if game_status["winner"] == 0 %}
-             <h1 style>
-                AI wins !
-            </h1>
-        {% endif %}
-
-        {% if game_status["winner"] == 1 %}
-             <h1 style>
-                Congratulation, you wins !
-            </h1>
-        {% endif %}
-
-
         <h1>
-            <span class="player-1">Player</span>
+            <span class="player-1">Player 1</span>
             <span class="player-vs">vs.</span>
-            <span class="player-2">AI</span>
+            <span class="player-2">Player 2</span>
         </h1>
 
         <div class="game-table">
             <div class="board">
+                <div class="field r-4 c-A d-2"></div>
+                <div class="field r-4 c-B"></div>
+                <div class="field r-4 c-C"></div>
+                <div class="field r-4 c-D d-1"></div>
 
-                <div class="field r-4 c-A d-2" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(3,0)" name="board" style="display:none"></button></form>
-                <div class="field r-4 c-B" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(3,1)" name="board" style="display:none"></button></form>
-                <div class="field r-4 c-C" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(3,2)" name="board" style="display:none"></button></form>
-                <div class="field r-4 c-D d-1" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(3,3)" name="board" style="display:none"></button></form>
-                <div class="field r-3 c-A" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(2,0)" name="board" style="display:none"></button></form>
-                <div class="field r-3 c-B d-2" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(2,1)" name="board" style="display:none"></button></form>
-                <div class="field r-3 c-C d-1" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(2,2)" name="board" style="display:none"></button></form>
-                <div class="field r-3 c-D" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(2,3)" name="board" style="display:none"></button></form>
-                <div class="field r-2 c-A" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(1,0)" name="board" style="display:none"></button></form>
-                <div class="field r-2 c-B d-1" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(1,1)" name="board" style="display:none"></button></form>
-                <div class="field r-2 c-C d-2" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(1,2)" name="board" style="display:none"></button></form>
-                <div class="field r-2 c-D" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(1,3)" name="board" style="display:none"></button></form>
-                <div class="field r-1 c-A d-1" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(0,0)" name="board" style="display:none"></button></form>
-                <div class="field r-1 c-B" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(0,1)" name="board" style="display:none"></button></form>
-                <div class="field r-1 c-C" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(0,2)" name="board" style="display:none"></button></form>
-                <div class="field r-1 c-D d-2" onclick="javascript:this.nextSibling.nextSibling.childNodes[0].click();"></div>
-                <form action="." method="post" style="display:none"><button value="(0,3)" name="board" style="display:none"></button></form>
+                <div class="field r-3 c-A"></div>
+                <div class="field r-3 c-B d-2"></div>
+                <div class="field r-3 c-C d-1"></div>
+                <div class="field r-3 c-D"></div>
+
+                <div class="field r-2 c-A"></div>
+                <div class="field r-2 c-B d-1"></div>
+                <div class="field r-2 c-C d-2"></div>
+                <div class="field r-2 c-D"></div>
+
+                <div class="field r-1 c-A d-1"></div>
+                <div class="field r-1 c-B"></div>
+                <div class="field r-1 c-C"></div>
+                <div class="field r-1 c-D d-2"></div>
 
                 <div class="pieces-wrap">
-                    {% for row in game_status["board"]%}
-                        {% set rowidx = loop.index %}
-                        {% for piece in row%}
-                            {% if piece is not none %}
-                                <div class="piece {{piece.parse()}} in-winning-row" style="bottom: {{ 25+ 100*(rowidx-1)}}px;
-                        left:{{ 25+ 100*(loop.index-1)}}px"></div>
-
-                            {% endif %}
-                        {% endfor %}
-                    {% endfor %}
+                <!--
+                <div class="piece"></div>
+                <div class="piece tall dark hole round"></div>
+                -->
                 </div>
             </div>
 
             <div class="board-aside">
-                <div class="next field">
-                    {% if game_status["next_piece"] is not none %}
-                    <div class="piece {{game_status["next_piece"].parse()}}">
-                    </div>
-                    {% endif %}
-
-
-                </div>
-                <!--<div class="remaining">-->
-                <form action="." method="post" class="remaining">
-                    {% for remaining_piece in game.remaining.bag %}
-                    <div class="piece {{remaining_piece.parse()}}" onclick="javascript:this.nextSibling.nextSibling.click();">
-                    </div>
-                    <button value="{{remaining_piece.validate()}}" name="remaining" style="display:none">
-                    </button>
-                    {% endfor %}
-                </form>
-                <!--</div>-->
-
+                <div class="next field"></div>
+                <div class="remaining"></div>
             </div>
         </div>
+
+        <script>
+            var game_id = '{{ game_id }}';
+        </script>
+        <script src="../static/js/utils.js"></script>
+        <script src="../static/js/game-view.js"></script>
     </body>
 </html>
