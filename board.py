@@ -1,5 +1,5 @@
 from pieces import pieces_list_definition
-
+import copy
 class FullSquareException(Exception):
     def __init__(self,msg):
         self.msg = msg
@@ -12,6 +12,7 @@ class SizeException(Exception):
 class Board(object):
     def __init__(self):
         self.data = [[None for i in range(4)] for j in range(4)]
+        self.datacopy = copy.deepcopy(self.data)
 
 
     def placePiece(self, whichPiece, X, Y):
@@ -56,6 +57,17 @@ class Board(object):
         else:
             return False
 
+    def parseDict(self,dict = {}):
+        """
+        parse the dictionary
+        :param dict: {(x,y):piece}
+        :return: none
+        """
+
+        self.data = copy.deepcopy(self.datacopy)
+        for key,value in dict.items():
+            self.placePiece(value,*key)
+
     def isFull(self):
         for x in range(4):
             for y in range(4):
@@ -91,6 +103,27 @@ class Board(object):
                 if self.data[i][j] is not None:
                     out.append((self.data[i][j], i, j))
         return out
+
+    def parseOutput(self):
+        out = []
+        for i in range(4):
+            tmp = []
+            for j in range(4):
+                if self.data[i][j] is None:
+                    tmp.append("")
+                if self.data[i][j] is not None:
+                    print(self.data[i][j])
+                    tmp.append("{:04b}".format(self.data[i][j].type()))
+            out.append(tmp)
+        return out
+
+    def getState(self):
+        state = None
+        if self.isWon():
+            state = 1
+        elif self.isFull():
+            state = 0
+        return state
 
 if __name__ == "__main__":
     test = Board()

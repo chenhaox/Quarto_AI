@@ -24,6 +24,13 @@ class Bag(object):
         for piece in self.bag:
             bag.append(piece.validate())
         return bag
+
+    def binary_output(self):
+        bag = []
+        for piece in self.bag:
+            bag.append("{:04b}".format(piece.type()))
+        return bag
+
     def remove(self, *args):
         args = args[0]
         if len(args) != 4:

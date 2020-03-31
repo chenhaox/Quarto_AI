@@ -3,12 +3,6 @@
     function $id(id) {
         return d.getElementById(id);
     }
-    function $(selector) {
-        return d.querySelector(selector);
-    }
-    function $_(selector) {
-        return d.querySelectorAll(selector);
-    }
     function $ajax(args) {
         // args:
         // {
@@ -65,8 +59,6 @@
     }
 
     w['$id']=$id;
-    w['$']=$;
-    w['$_']=$_;
     w['$ajax'] = $ajax;
     w['$js'] = $js;
     w['main'] = $id("main");

@@ -1,4 +1,7 @@
-
+@keyframes appearanimation {
+    from {opacity: 0;}
+    to {opacity: 1;}
+}
 /* ==================================================================
    General
    ================================================================== */
@@ -121,6 +124,14 @@ body {
     position: relative;
 }
 
+.field-no-piece{
+    opacity: 1;
+}
+.field-no-piece:hover{
+    opacity: 0.5;
+    transition: .3s ease-in;
+}
+
 .board .field::before, .board .field::after {
     color: black;
     font: 1.5em sans-serif;
@@ -172,6 +183,16 @@ body {
 
 .remaining .piece {
     margin: 50px 20px 0 0;
+    opacity: 1;
+    transition: all .3s ease-out;
+}
+
+.remaining .piece.hidetransition {
+    opacity: 0;
+    transition: opacity .3s ease-out;
+}
+.remaining .piece.hide {
+    display: none;
 }
 
 .next {
@@ -183,4 +204,22 @@ body {
 
 .next .piece {
     margin: 0 auto 20px;
+}
+
+.banner{
+    position: fixed;
+    top: 5vh;
+    width: 70vw;
+    margin: auto;
+    z-index: 8000;
+    animation-name: appearanimation;
+    animation-duration: 1s;
+}
+.bg{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:-1;
+    width:100vw;
+    height:100vh;
 }

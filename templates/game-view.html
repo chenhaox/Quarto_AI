@@ -6,16 +6,21 @@
         <title>Game</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <link rel="stylesheet" href="../static/css/normalize.css">
-        <link rel="stylesheet" href="../static/css/game-view.css">
+        <link rel="stylesheet" href="/static/css/normalize.css">
+        <link rel="stylesheet" href="/static/css/game-view.css">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     </head>
 
     <body>
         <h1>
             <span class="player-1">Player 1</span>
             <span class="player-vs">vs.</span>
-            <span class="player-2">Player 2</span>
+            <span class="player-2">AI</span>
         </h1>
+        <div class = "bg"> <div id="banner"></div></div>
+
 
         <div class="game-table">
             <div class="board">
@@ -52,11 +57,52 @@
                 <div class="remaining"></div>
             </div>
         </div>
-
         <script>
             var game_id = '{{ game_id }}';
         </script>
-        <script src="../static/js/utils.js"></script>
-        <script src="../static/js/game-view.js"></script>
+        <script>
+            // $ajax({
+            //     url:'getnextstep',
+            //     method: 'POST',
+            //     type:'JSON',
+            //     data:{
+            //         remaining_pieces:"TEST",
+            //         board:"TEST",
+            //         next_piece:"TEST"
+            //     },
+            //     success: function(rq){
+            //         console.log(JSON.parse(rq.responseText))
+            //     },
+            //     loading: function(rq){
+            //         text = "AI is thinking ..."
+            //     }
+            // });
+            var board = [];
+            for(let i=0;i<4;i++){
+                let tmpboard = [];
+                for(let j=0;j<4;j++){
+                    tmpboard.push("")
+                }
+                board.push(tmpboard);
+            }
+            function generatebinary(n) {
+                var remaining = [];
+                while(n--){
+                    remaining.push(("0000"+n.toString(2)).slice(-4))
+                }
+                return remaining
+            }
+            var remaining_piece = generatebinary(16).reverse();
+            var next_piece = "";
+            console.log(board);
+            console.log(remaining_piece);
+            console.log(next_piece);
+        </script>
+        {% block javascript %}
+        <script>
+            {% include "js/utils.js" %}
+            {% include "js/game-view.js" %}
+        </script>
+        {% endblock %}
     </body>
 </html>

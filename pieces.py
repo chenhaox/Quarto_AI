@@ -43,6 +43,15 @@ class Piece:
     def validate(self):
         return (int(self.round_shape), int(self.big_size), int(self.light_color), int(self.top_hole))
 
+def makeAPiecefromString(id,string):
+    if len(string) != 4:
+        raise Exception("The length of the string must be 4")
+    round_shape = bool(int(string[0]))
+    big_size = bool(int(string[1]))
+    light_color = bool(int(string[2]))
+    top_hole = bool(int(string[3]))
+    return Piece(id, round_shape=round_shape, big_size=big_size, light_color=light_color, top_hole=top_hole)
+
 pieces_list_definition = [
         Piece(1, round_shape= False, big_size= False, light_color= False, top_hole= False),
         Piece(2, round_shape= True, big_size= False, light_color= False, top_hole= False),
@@ -65,3 +74,4 @@ pieces_list_definition = [
 if __name__ == "__main__":
     for piece in pieces_list_definition:
         print(piece.type())
+        print(piece.validate())

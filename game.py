@@ -30,21 +30,6 @@ def random_string(N):
     chars = string.ascii_lowercase + string.digits
     return ''.join(random.choice(chars) for _ in range(N))
 
-class GameList():
-    def __init__(self):
-        self.gamelist ={}
-        self.allownumberofonlineplayer = 5
-
-    def new_game(self):
-        if len(self.gamelist)>= self.allownumberofonlineplayer-1:
-            return None
-        game_id = random_string(8)
-        while game_id in self.gamelist:
-            game_id = random_string(8)
-        self.gamelist[game_id] = Game()
-        self.gamelist[game_id].start_game()
-        return game_id
-
 class Game(object):
     def __init__(self):
         self.state = _OPEN
@@ -99,20 +84,21 @@ class Game(object):
         result = self.AI.getNext(board=self.board,bag=self.remaining,next_piece=self.next_piece)
         next_piece = result.next_piece
         coordinate = result.coordinate
-        print("The result is",result.next_piece.validate(),result.coordinate)
-        self.place_piece(coordinate)
-        self.select_next(next_piece.validate())
-        print("The next_piece is",self.next_piece)
+        print("The result is",result.coordinate)
+        # self.place_piece(coordinate)
+        # self.select_next(next_piece.validate())
+        print("The next_piece is",result.next_piece.validate())
+        return next_piece, coordinate
 
-    def get_state(self):
-        return {
-            'state': ['open', 'playing', 'finished'][self.state],
-            'active_player': self.active_player,
-            'winner': self.winner,
-            'board': self.board.validateBoard(),
-            'remaining': self.remaining.validate_bag(),
-            'next_piece': None if self.next_piece is None else self.next_piece,
-        }
+    # def get_state(self):
+    #     return {
+    #         'state': ['open', 'playing', 'finished'][self.state],
+    #         'active_player': self.active_player,
+    #         'winner': self.winner,
+    #         'board': self.board.validateBoard(),
+    #         'remaining': self.remaining.validate_bag(),
+    #         'next_piece': None if self.next_piece is None else self.next_piece,
+    #     }
 
 if __name__ == "__main__":
     game = Game()
